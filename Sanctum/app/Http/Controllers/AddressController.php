@@ -82,11 +82,13 @@ class AddressController extends Controller
      */
     public function update(Request $request, Address $address)
     {
+
         $inputs = \request()->validate([
             'title' => 'required',
             'content' => 'required',
-            'image' => 'required|mimes:jpeg,jpg,png',
+            'image' => 'mimes:jpeg,jpg,png',
         ]);
+
 
         if (request('image')) {
             $inputs['image'] = \request('image')->store('images');
@@ -94,8 +96,8 @@ class AddressController extends Controller
             $inputs['image'] = $address->image;
         }
 
-        $address = $address->update($inputs);
-        return response()->json($address);
+        $addres_data = $address->update($inputs);
+        return response()->json('updated',200);
     }
 
     /**
